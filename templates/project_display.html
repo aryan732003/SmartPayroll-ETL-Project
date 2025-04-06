@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<section style="padding: 60px 20px; max-width: 1000px; margin: auto;">
+    <h1 style="font-size: 2.8em; color: #145a32; margin-bottom: 20px; text-align: center;">SmartPayroll Web Application</h1>
+
+    <p style="font-size: 1.2em; line-height: 1.6; color: #333;">
+        The final product of the SmartPayroll ETL project is a fully functional payroll management web app developed using Flask and SQLAlchemy. It provides a user-friendly interface to interact with the processed payroll data stored in SQL Server.
+    </p>
+
+    <ul style="text-align: left; margin-top: 30px; font-size: 1.1em;">
+        <li>🔍 <strong>Employee Search & Filter</strong>: Easily search employees by name or ID, and filter by department.</li>
+        <li>🏢 <strong>Department View</strong>: View all employees under a department with summary stats.</li>
+        <li>💰 <strong>Salary Breakdown</strong>: Net salary is calculated using allowances, deductions, and basic salary logic.</li>
+        <li>📥 <strong>CSV & PDF Downloads</strong>: Export payroll data for reports or record-keeping.</li>
+        <li>🌙 <strong>Dark Mode Toggle</strong>: Switch between light and dark themes for better accessibility.</li>
+    </ul>
+    
+    <h2 style="color: #1e8449; margin-top: 50px;">🖥️ App Interface</h2>
+    <div style="text-align:center; margin-top: 20px;">
+        <img src="{{ url_for('static', filename='images/SmartPayroll_UI.png') }}" alt="SmartPayroll UI" style="max-width: 600px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <p style="color: #666; font-size: 0.95em; margin-top: 10px;">SmartPayroll Dashboard — clean and responsive UI</p>
+    </div>
+
+    <div style="text-align: center; margin-top: 50px;">
+        <a href="{{ url_for('showEmployees') }}" class="btn" style="padding: 15px 30px; font-size: 18px;">Launch the Live App 🚀</a>
+    </div>
+
+    <hr style="margin: 60px 0;">
+    <h3 style="text-align: center; font-size: 1.5em; color: #145a32;">Conclusion</h3>
+    <p style="text-align: center; font-size: 1.05em; color: #444; max-width: 800px; margin: auto;">
+        SmartPayroll demonstrates how real-world payroll data can be transformed via an ETL pipeline, analyzed with Python, and delivered through a full-stack web application.
+        It brings together SQL, Flask, and Data Analysis into one cohesive project – ready for deployment, presentation, or portfolio showcase.
+    </p>    
+</section>
+{% endblock %}
+
+

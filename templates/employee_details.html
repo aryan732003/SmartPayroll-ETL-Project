@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #10b981;
+            --secondary-light: #34d399;
+            --dark-text: #1f2937;
+            --light-text: #f9fafb;
+            --bg-light: #f8fafc;
+            --card-light: #ffffff;
+            --border-light: #e5e7eb;
+            --bg-dark: #111827;
+            --card-dark: #1f2937;
+            --border-dark: #374151;
+        }
+
+        body {
+            background: var(--bg-light);
+            font-family: 'Poppins', sans-serif;
+            padding: 30px 20px;
+            color: var(--dark-text);
+            transition: all 0.3s ease;
+        }
+
+        .card {
+            max-width: 1200px;
+            margin: 30px auto;
+            background: var(--card-light);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            display: flex;
+            padding: 40px;
+            gap: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .left {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-right: 1px solid var(--border-light);
+            padding-right: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            color: var(--primary-dark);
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .left h2 {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .designation {
+            font-size: 18px;
+            color: var(--dark-text);
+            margin-bottom: 25px;
+            font-weight: 500;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 6px 15px;
+            border-radius: 20px;
+            color: var(--secondary-color);
+        }
+
+        .contact-info {
+            font-size: 16px;
+            color: var(--dark-text);
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-info svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .right {
+            width: 70%;
+        }
+
+        .right h3 {
+            font-size: 32px;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--secondary-light);
+            font-weight: 600;
+            position: relative;
+        }
+
+        .right h3:after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+        .payroll-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            font-size: 16px;
+        }
+
+        .info-group {
+            display: flex;
+            flex-direction: column;
+            padding: 16px 20px;
+            border-radius: 12px;
+            background-color: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .info-group:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .label {
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .value {
+            color: var(--dark-text);
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .net-salary {
+            margin-top: 40px;
+            font-size: 20px;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 16px 25px;
+            border-radius: 12px;
+            display: inline-flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .net-salary .value {
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 24px;
+        }
+
+        .btn-group {
+            margin-top: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background:  #1d4ed8;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* DARK MODE STYLES */
+        body.dark-mode {
+            background: var(--bg-dark);
+            color: var(--light-text);
+        }
+
+        body.dark-mode .card {
+            background: var(--card-dark);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.03);
+        }
+
+        body.dark-mode .profile-pic {
+            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+            color: #bfdbfe;
+        }
+
+        body.dark-mode .left h2 {
+            color: #93c5fd;
+        }
+
+        body.dark-mode .designation {
+            color: #6ee7b7;
+            background: rgba(16, 185, 129, 0.15);
+        }
+
+        body.dark-mode .contact-info,
+        body.dark-mode .value {
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .label {
+            color: #93c5fd;
+        }
+
+        body.dark-mode .right h3 {
+            color: #93c5fd;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        body.dark-mode .right h3:after {
+            background: #3b82f6;
+        }
+
+        body.dark-mode .btn {
+            background: var(--primary-light);
+        }
+
+        body.dark-mode .btn:hover {
+            background: var(--primary-color);
+        }
+
+        body.dark-mode .info-group {
+            background-color: rgba(30, 58, 138, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        body.dark-mode .info-group:hover {
+            background-color: rgba(30, 58, 138, 0.3);
+        }
+
+        body.dark-mode .left {
+            border-right: 1px solid var(--border-dark);
+        }
+
+        body.dark-mode .net-salary {
+            background: rgba(16, 185, 129, 0.15);
+        }
+
+        /* Toggle Switch */
+        .toggle-container {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--secondary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .toggle-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--dark-text);
+        }
+
+        body.dark-mode .toggle-label {
+            color: var(--light-text);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .card {
+                flex-direction: column;
+                gap: 30px;
+                padding: 30px;
+            }
+            
+            .left, .right {
+                width: 100%;
+                border-right: none;
+                padding-right: 0;
+            }
+            
+            .left {
+                border-bottom: 1px solid var(--border-light);
+                padding-bottom: 30px;
+            }
+            
+            body.dark-mode .left {
+                border-bottom: 1px solid var(--border-dark);
+            }
+            
+            .payroll-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                padding: 15px 10px;
+            }
+            
+            .card {
+                padding: 25px 20px;
+            }
+            
+            .profile-pic {
+                width: 150px;
+                height: 150px;
+                font-size: 70px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toggle Dark Mode -->
+    <div class="toggle-container">
+        <label class="switch">
+            <input type="checkbox" id="darkToggle">
+            <span class="slider round"></span>
+        </label>
+        <span class="toggle-label">Dark Mode</span>
+    </div>
+
+    <!-- Card -->
+    <div class="card">
+        <div class="left">
+            <div class="profile-pic">👤</div>
+            <h2>{{ employee.EmployeeName }}</h2>
+            <div class="designation">{{ designation.DesignationName }}</div>
+            <div class="contact-info">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                {{ employee.Email }}
+            </div>
+            <div class="contact-info">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                {{ employee.PhoneNumber }}
+            </div>
+        </div>
+
+        <div class="right">
+            <h3>Payroll Breakdown</h3>
+            <div class="payroll-grid">
+                <div class="info-group">
+                    <div class="label">Basic Pay</div>
+                    <div class="value">₹{{ payroll.BasicPay }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="label">HRA</div>
+                    <div class="value">₹{{ payroll.HouseRentAllowance }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="label">Medical Allowance</div>
+                    <div class="value">₹{{ payroll.MedicalAllowance }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="label">Special Allowance</div>
+                    <div class="value">₹{{ payroll.SpecialAllowance }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="label">Other Earnings</div>
+                    <div class="value">₹{{ payroll.OtherEarnings }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="label">Provident Fund</div>
+                    <div class="value">₹{{ payroll.ProvidentFund }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="label">Income Tax</div>
+                    <div class="value">₹{{ payroll.IncomeTax }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="label">Professional Tax</div>
+                    <div class="value">₹{{ payroll.ProfessionalTax }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="label">Other Deductions</div>
+                    <div class="value">₹{{ payroll.OtherDeductions }}</div>
+                </div>
+                <div class="info-group">
+                    <div class="label">Leave Deduction</div>
+                    <div class="value">₹{{ payroll.LeaveDeductionAmount }}</div>
+                </div>
+            </div>
+
+            {% if net_salary is not none %}
+            <div class="net-salary">
+                Net Salary: <span class="value">₹{{ "%.2f"|format(net_salary) }}</span>
+            </div>
+            {% endif %}
+
+            <div class="btn-group">
+                <a href="{{ url_for('showEmployees') }}" class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Back to Employees
+                </a>
+                <a href="{{ url_for('download_employee_csv', employee_id=employee.EmployeeID) }}" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download CSV
+                </a>
+                <a href="{{ url_for('download_employee_pdf', employee_id=employee.EmployeeID) }}" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download PDF
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const toggle = document.getElementById('darkToggle');
+        toggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('dark-mode', document.body.classList.contains('dark-mode'));
+        });
+
+        window.onload = () => {
+            const dark = localStorage.getItem('dark-mode') === 'true';
+            document.body.classList.toggle('dark-mode', dark);
+            toggle.checked = dark;
+        };
+    </script>
+</body>
+</html>

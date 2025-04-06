@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}ETL Pipeline - SmartPayroll ETL{% endblock %}
+
+{% block content %}
+<section style="padding: 60px 20px; max-width: 1000px; margin: auto;">
+    <h1 style="font-size: 2.5em; color: #1b4f72; margin-bottom: 30px; text-align: center;">ETL Pipeline Explanation</h1>
+
+    <h2 style="color: #117864;">ETL Process Overview</h2>
+    <p style="font-size: 1.1em; color: #333;">
+        The ETL (Extract, Transform, Load) process in SmartPayroll follows a structured flow to move data from raw CSV files into a well-normalized SQL Server database.
+    </p>
+    <img src="{{ url_for('static', filename='images/etl.jpeg') }}" alt="ETL Workflow Diagram" style="display: block; margin: 20px auto; max-width: 100%;">
+
+    <h3 style="color: #145a32; margin-top: 40px;">Sample Raw Data (CSV Preview)</h3>
+    <img src="{{ url_for('static', filename='images/CSV.png') }}" 
+    alt="CSV Sample" 
+    style="width: 80%; display: block; margin: 20px auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+    <!-- Extract Section -->
+    <h2 style="color: #117864; margin-top: 40px;">1. Extract</h2>
+    <ul style="font-size: 1.1em; color: #333;">
+        <li>Raw data is collected from CSVs using <code>pandas</code>.</li>
+        <li>User is prompted whether to truncate and reload data.</li>
+        <li>Duplicate check ensures data quality before loading into SQL.</li>
+    </ul>
+
+    <h3 style="color: #145a32;">Python ETL - Truncate & Insert Control</h3>
+    <pre style="background-color: #f4f4f4; padding: 15px; border-radius: 10px; overflow-x: auto;">
+user_input = input("Do you want to truncate the table before inserting data? (yes/no): ").strip().lower()
+if user_input == "yes":
+    truncate_table()
+
+insert_data_input = input("Do you want to insert the data after truncating? (yes/no): ").strip().lower()
+if insert_data_input == "no":
+    logging.info("Exiting the script as user opted not to insert data.")
+    sys.exit(0)
+    </pre>
+
+    <h3 style="color: #145a32;">Python ETL - Duplicate Check Before Insert</h3>
+    <pre style="background-color: #f4f4f4; padding: 15px; border-radius: 10px; overflow-x: auto;">
+def check_for_duplicates(df):
+    with pyodbc.connect(conn_str) as cnxn:
+        with cnxn.cursor() as cursor:
+            for index, row in df.iterrows():
+                cursor.execute("SELECT COUNT(*) FROM Employees WHERE Email = ? OR PhoneNumber = ?", (row['Email'], row['PhoneNumber']))
+                if cursor.fetchone()[0] > 0:
+                    raise ValueError("Duplicate data detected.")
+    </pre>
+
+    <!-- Transform Section -->
+    <h2 style="color: #117864; margin-top: 40px;">2. Transform</h2>
+    <ul style="font-size: 1.1em; color: #333;">
+        <li>Business logic such as department/designation mapping.</li>
+        <li>Net salary calculations using stored procedures.</li>
+        <li>Automated execution of transformation stored procs from Python.</li>
+    </ul>
+
+    <h3 style="color: #145a32;">Python - Execute All Stored Procedures</h3>
+    <pre style="background-color: #f4f4f4; padding: 15px; border-radius: 10px; overflow-x: auto;">
+def execute_stored_procedures():
+    procedures = ["LoadDepartments", "LoadDesignations", "LoadEmployees", "LoadPayroll", "LoadTimesheet", "LoadLeaveRecords"]
+    with pyodbc.connect(conn_str) as cnxn:
+        with cnxn.cursor() as cursor:
+            for sp in procedures:
+                logging.info(f"Executing {sp}")
+                cursor.execute(f"EXEC {sp}")
+                cnxn.commit()
+    </pre>
+
+    <h3 style="color: #145a32;">SQL - Employee Merge Logic</h3>
+    <pre style="background-color: #f4f4f4; padding: 15px; border-radius: 10px; overflow-x: auto;">
+MERGE INTO Employees AS target
+USING (
+    SELECT DISTINCT EIP.EmployeeName, EIP.Email, EIP.PhoneNumber, D.DepartmentID, DS.DesignationID
+    FROM ExcelImportPayroll EIP
+    LEFT JOIN Departments D ON EIP.Department = D.DepartmentName
+    LEFT JOIN Designations DS ON EIP.Designation = DS.DesignationName
+) AS source
+ON target.Email = source.Email
+WHEN NOT MATCHED THEN
+    INSERT (EmployeeName, Email, PhoneNumber, DepartmentID, DesignationID)
+    VALUES (source.EmployeeName, source.Email, source.PhoneNumber, source.DepartmentID, source.DesignationID);
+    </pre>
+
+    <!-- Load Section -->
+    <h2 style="color: #117864; margin-top: 40px;">3. Load</h2>
+    <ul style="font-size: 1.1em; color: #333;">
+        <li>Data is loaded into normalized SQL Server tables.</li>
+        <li>Foreign key relationships ensure referential integrity.</li>
+        <li>Merge logic prevents duplication in monthly payrolls.</li>
+    </ul>
+
+    <h3 style="color: #145a32;">SQL - Payroll Monthly Merge</h3>
+    <pre style="background-color: #f4f4f4; padding: 15px; border-radius: 10px; overflow-x: auto;">
+MERGE INTO Payroll AS target
+USING (
+    SELECT E.EmployeeID, EIP.PayPeriodStartDate, EIP.PayPeriodEndDate, 
+           EIP.BasicPay, EIP.ProvidentFund, EIP.IncomeTax,
+           YEAR(EIP.PayPeriodStartDate) AS PayYear,
+           MONTH(EIP.PayPeriodStartDate) AS PayMonth
+    FROM ExcelImportPayroll EIP
+    INNER JOIN Employees E ON EIP.Email = E.Email
+) AS source
+ON target.EmployeeID = source.EmployeeID 
+   AND YEAR(target.PayPeriodStartDate) = source.PayYear
+   AND MONTH(target.PayPeriodStartDate) = source.PayMonth
+WHEN MATCHED THEN 
+    UPDATE SET BasicPay = source.BasicPay, ProvidentFund = source.ProvidentFund, IncomeTax = source.IncomeTax
+WHEN NOT MATCHED THEN 
+    INSERT (EmployeeID, PayPeriodStartDate, PayPeriodEndDate, BasicPay, ProvidentFund, IncomeTax)
+    VALUES (source.EmployeeID, source.PayPeriodStartDate, source.PayPeriodEndDate, source.BasicPay, source.ProvidentFund, source.IncomeTax);
+    </pre>
+    
+    <h3 style="color: #145a32; margin-top: 40px;">ETL Execution Success</h3>
+    <p style="font-size: 1.1em; color: #333;">
+        After running the ETL pipeline, a confirmation or success message is logged to indicate successful data processing.
+    </p>
+    <img src="{{ url_for('static', filename='images/ETL_Success.png') }}" alt="ETL Success Screenshot"
+        style="max-width: 80%; display: block; margin: 20px auto; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.15);">
+
+        
+    <p style="font-size: 1.1em; color: #2e7d32; margin-top: 30px;">
+        ✅ All data has been successfully extracted from raw files, transformed through Python and SQL logic, and loaded into the SmartPayroll database with integrity checks.
+    </p>
+    <!-- CTA -->
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="{{ url_for('analysis') }}" class="btn" style="background-color: #1b4f72; color: white; padding: 15px 30px; border-radius: 10px; font-size: 18px; text-decoration: none;">
+            View Data Analysis →
+        </a>
+    </div>
+</section>
+{% endblock %}

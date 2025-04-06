@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}SmartPayroll ETL{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>SmartPayroll ETL</h1>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('workflow_database') }}">Workflow & Database</a>
+            <a href="{{ url_for('etl') }}">ETL Pipeline</a>
+            <a href="{{ url_for('analysis') }}">Analysis</a>
+            <a href="{{ url_for('project_display') }}">Final Product</a>
+            <a href="{{ url_for('showEmployees') }}" class="launch-button">Launch Project</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <section style="padding: 60px 20px; max-width: 1000px; margin: auto;">
+            <h1 style="font-size: 2.5em; color: #1b4f72; margin-bottom: 30px; text-align: center;">Workflow & Database Structure</h1>
+            <h2 style="color: #117864; margin-top: 20px;">Overall Workflow</h2>
+            <p style="font-size: 1.1em; color: #333; line-height: 1.6;">
+                The SmartPayroll ETL project follows a structured flow:
+            </p>
+            <ul style="margin-top: 10px; padding-left: 20px; font-size: 1.1em; color: #333; line-height: 1.6;">
+                <li><strong>Data Collection:</strong> Raw employee data is collected from multiple sources.</li>
+                <li><strong>Data Cleaning:</strong> Data is cleaned and pre-processed using Python scripts.</li>
+                <li><strong>Transformation:</strong> Salary calculations, date formatting, and logic are applied.</li>
+                <li><strong>Loading:</strong> Transformed data is loaded into SQL Server using stored procedures.</li>
+                <li><strong>Analysis:</strong> Data is analyzed in Jupyter to extract insights.</li>
+                <li><strong>Display:</strong> A Flask web app is used to visualize and manage the data.</li>
+            </ul>
+            <h3 style="text-align: center; color: #1b4f72; margin-bottom: 10px;">Visual Workflow Representation</h3>
+            <div style="text-align: center; margin: 30px 0;">
+                <img src="{{ url_for('static', filename='images/Flow_Diagram.png') }}" 
+                     alt="ETL Workflow Diagram" 
+                     style="width: 80%; min-width: 600px; max-width: 700px; height: auto; 
+                            border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                            border: 1px solid #eaeaea;">
+                <p style="font-size: 0.95em; color: #555; margin-top: 12px; font-weight: 500;">
+                    Figure: End-to-End ETL Workflow Diagram
+                </p>
+            </div>
+            
+
+            <h2 style="color: #117864; margin-top: 40px;">Database Structure</h2>
+            <p style="font-size: 1.1em; color: #333; line-height: 1.6;">
+                The SQL Server database contains multiple tables with proper relationships. Major tables include:
+            </p>
+            <ul style="margin-top: 10px; padding-left: 20px; font-size: 1.1em; color: #333; line-height: 1.6;">
+                <li><strong>Employees:</strong> Stores employee details like name, gender, DOB, department_id, etc.</li>
+                <li><strong>Departments:</strong> Holds department names and their IDs.</li>
+                <li><strong>Designations:</strong> Stores job titles and role-specific information.</li>
+                <li><strong>ExcelImportPayroll:</strong> Temporary table for importing payroll data from Excel.</li>
+                <li><strong>LeaveRecords:</strong> Tracks employee leaves and absences.</li>
+                <li><strong>Payroll:</strong> Stores final calculated salaries after applying business rules.</li>
+                <li><strong>Timesheet:</strong> Maintains work hours and attendance logs.</li>
+            </ul>
+            <h3 style="text-align: center; color: #1b4f72; margin-top: 40px;">Database Design Overview</h3>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <img src="{{ url_for('static', filename='images/ER_diagram.png') }}" alt="Database ER Diagram" style="max-width: 100%; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+                <p style="color: #555; font-style: italic; margin-top: 10px;">Figure: Entity-Relationship Diagram for SmartPayroll Database</p>
+            </div>
+            
+
+            <h2 style="color: #117864; margin-top: 40px;">Key Takeaways</h2>
+            <ul style="font-size: 1.1em; color: #333; line-height: 1.6;">
+                <li>Structured ETL pipeline ensures reliable payroll data flow</li>
+                <li>Relational database design enables robust queries and reporting</li>
+                <li>Full-stack integration showcases end-to-end data project capabilities</li>
+            </ul>
+            <p style="font-size: 1.1em; color: #333; line-height: 1.6;">
+                Relationships are defined using foreign keys. Data integrity and normalization have been maintained for efficient querying.
+            </p>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="{{ url_for('etl') }}" class="btn" style="background-color: #1b4f72; color: white; padding: 15px 30px; border-radius: 10px; font-size: 18px; text-decoration: none;">
+                    View ETL Pipeline Explanation →
+                </a>
+            </div>
+        </section>
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2025 SmartPayroll ETL</p>
+    </footer>
+</body>
+</html>

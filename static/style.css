@@ -1,0 +1,95 @@
+/* static/style.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    background-color: #004d40;
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+nav {
+    margin-top: 0.5rem;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #00796b;
+}
+
+.launch-button {
+    background-color: #00bfa5;
+    padding: 8px 16px;
+    font-weight: 600;
+    border-radius: 6px;
+    margin-left: 20px;
+}
+
+.launch-button:hover {
+    background-color: #009688;
+}
+
+main {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: auto;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #eeeeee;
+    color: #666;
+    margin-top: 40px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    color: white;
+    background-color: #00acc1;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #00838f;
+}
+
+.btn-next {
+    background-color: #004d40;
+}
+
+.btn-next:hover {
+    background-color: #00332d;
+}
+
+img:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s ease-in-out;
+}

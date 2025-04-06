@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<section style="padding: 60px 20px; max-width: 1000px; margin: auto;">
+
+    <h1 style="font-size: 3em; color: #145a32; margin-bottom: 20px; text-align: center;">
+        Welcome to SmartPayroll ETL
+    </h1>
+
+    <div style="text-align: left;">
+
+        <p style="font-size: 1.2em; color: #333; line-height: 1.8;">
+            <strong>SmartPayroll ETL</strong> is a comprehensive end-to-end payroll management system developed using a modern data engineering and web development stack. This project highlights how real-world payroll data can be extracted, transformed, analyzed, and displayed seamlessly through an automated ETL pipeline and interactive web application.
+        </p>
+
+        <p style="font-size: 1.2em; color: #333; line-height: 1.8; margin-top: 20px;">
+            At its core, the project leverages a structured <strong>ETL (Extract, Transform, Load)</strong> process:
+            raw data in CSV format is ingested via Python scripts, cleaned and transformed, and then loaded into a relational database—<strong>Microsoft SQL Server</strong>. Python's <code>pandas</code>, <code>pyodbc</code>, and SQL stored procedures are used to ensure the data is accurate, relational, and optimized for queries.
+        </p>
+
+        <p style="font-size: 1.2em; color: #333; line-height: 1.8; margin-top: 20px;">
+            The processed data is then analyzed in <strong>Jupyter Notebook</strong> using Python’s data science libraries such as <code>pandas</code>, <code>matplotlib</code>, and <code>seaborn</code>. These notebooks uncover meaningful insights—like salary distributions, department-wise expenses, and leave patterns—that help in making strategic decisions.
+        </p>
+
+        <p style="font-size: 1.2em; color: #333; line-height: 1.8; margin-top: 20px;">
+            The final step is visualization and user interaction. The project uses the <strong>Flask web framework</strong> to build a lightweight and responsive web interface. The Flask backend connects to the SQL Server using <code>SQLAlchemy</code>, and dynamically fetches data to power pages like:
+        </p>
+
+        <ul style="font-size: 1.2em; color: #333; line-height: 1.8; margin-left: 20px; margin-top: 10px;">
+            <li>Employee search & filter</li>
+            <li>Department-based breakdowns</li>
+            <li>Payroll details and salary breakdown</li>
+            <li>CSV and PDF downloads for payroll reports</li>
+            <li>Dark mode toggle on detail views</li>
+        </ul>
+
+        <p style="font-size: 1.2em; color: #333; line-height: 1.8; margin-top: 20px;">
+            This end-to-end solution demonstrates how data engineering (ETL pipelines), data analysis (Python/Jupyter), and full-stack development (Flask + SQL Server) can work together to solve real business problems with technology. Every step from raw data to final interface has been built from scratch for full transparency and control.
+        </p>
+    </div>
+
+    <div style="text-align: center;">
+        <a href="{{ url_for('workflow_database') }}" class="btn" style="margin-top: 40px; display: inline-block; background-color: #0b3d20; color: white; padding: 15px 30px; border-radius: 10px; font-size: 18px; text-decoration: none; transition: background 0.3s ease;">
+            View Workflow & Database Structure →
+        </a>
+    </div>
+</section>
+{% endblock %}

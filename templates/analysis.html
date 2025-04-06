@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<section style="padding: 60px 20px; text-align: center; max-width: 1000px; margin: auto;">
+    <h1 style="font-size: 2.5em; color: #76448a; margin-bottom: 20px;">Data Analysis in Jupyter Notebook</h1>
+
+    <p style="font-size: 1.1em; color: #444; line-height: 1.6;">
+        After successfully executing the ETL pipeline, the cleansed payroll data was stored in SQL Server. Using Python and Pandas within a Jupyter Notebook, we performed comprehensive data analysis to extract actionable insights and trends from the employee dataset.
+    </p>
+
+    <ul style="text-align: left; font-size: 1.05em; line-height: 1.7; color: #333; margin-top: 20px;">
+        <li><strong>Data Cleaning:</strong> Handled missing values, ensured correct data types, and removed duplicates or outliers.</li>
+        <li><strong>Salary Insights:</strong> Identified high and low salary ranges, department-wise distributions, and anomalies.</li>
+        <li><strong>Allowance Distribution:</strong> Explored how different departments allocate allowances and benefits.</li>
+        <li><strong>Visualizations:</strong> Generated visual reports like bar graphs, pie charts, and histograms using <code>matplotlib</code> and <code>seaborn</code>.</li>
+    </ul>
+
+    <h2 style="margin-top: 40px; color: #5b2c6f;">Interactive Analysis Report</h2>
+    <p style="color: #555; font-size: 1em;">You can scroll through the notebook below to view the code, outputs, and charts generated during analysis.</p>
+
+    <iframe src="{{ url_for('static', filename='Payroll_Data_Analysis.html') }}" 
+        width="100%" height="800px" style="border: none; margin-top: 20px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+    </iframe>
+
+    <p style="margin-top: 15px; font-size: 0.95em; color: #666;">Full Jupyter notebook embedded for reference</p>
+
+    <a href="{{ url_for('static', filename='Payroll_Data_Analysis.html') }}" 
+       download class="btn" 
+       style="margin-top: 25px; display: inline-block; background-color: #512e5f; color: white; padding: 12px 25px; border-radius: 8px; font-size: 16px; text-decoration: none;">
+        📥 Download Analysis Report (HTML)
+    </a>
+
+    <a href="{{ url_for('project_display') }}" class="btn" 
+       style="margin-top: 30px; margin-left: 15px; display: inline-block; background-color: #76448a; color: white; padding: 12px 25px; border-radius: 8px; font-size: 16px; text-decoration: none;">
+        Explore Final Product →
+    </a>
+</section>
+{% endblock %}
