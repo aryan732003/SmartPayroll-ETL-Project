@@ -25,7 +25,7 @@
 
 | Dark Mode | Employee List | PDF Preview |
 |----------|----------------|-------------|
-| ![Dark Mode](screenshots/dark_mode.png) | ![List](screenshots/list.png) | ![PDF](screenshots/pdf.png) |
+| ![Dark Mode](https://github.com/aryan732003/SmartPayroll-ETL-Project/blob/main/Screenshots/dark_mode.png?raw=true) | ![List](https://github.com/aryan732003/SmartPayroll-ETL-Project/blob/main/Screenshots/list.png?raw=true) | ![PDF](https://github.com/aryan732003/SmartPayroll-ETL-Project/blob/main/Screenshots/pdf.png?raw=true) |
 
 ---
 
@@ -145,11 +145,6 @@ The analysis is performed in the `analysis/` folder using Jupyter Notebooks:
 ![ETL Workflow Diagram](https://github.com/aryan732003/SmartPayroll-ETL-Project/blob/main/static/images/Flow_Diagram.png)
 
 
----
-
-## 🔄 Workflow Diagram
-
-![Workflow Diagram](assets/workflow_diagram.png)
 
 ## 📁 Folder Highlights
 
