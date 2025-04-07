@@ -93,7 +93,7 @@ SmartPayroll-ETL-Project/
 
 ---
 
-## 🧪 Run Locally
+## 🧪 Run on Local
 
 
 # 1. Clone the repository
